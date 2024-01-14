@@ -27,18 +27,25 @@ plt.ylabel("grade")
 plt.show()
 ################################################################################
 
+def fit_and_score(clf):
+    fit = clf.fit(features_train, labels_train)
+    acc = fit.score(features_test, labels_test)
+    print("{} Accuracy: {}".format(clf, acc))
 
-### your code here!  name your classifier object clf if you want the 
-### visualization code (prettyPicture) to show you the decision boundary
+### K Nearest Neighbors
+from sklearn.neighbors import KNeighborsClassifier
+clf_knn = KNeighborsClassifier(n_neighbors=1)
+fit_and_score(clf_knn)
+
+### AdaBoost
+# https://blog.paperspace.com/adaboost-optimizer/
+from sklearn.ensemble import AdaBoostClassifier
+clf_ada = AdaBoostClassifier()
+fit_and_score(clf_ada)
 
 
-
-
-
-
-
-
-try:
-    prettyPicture(clf, features_test, labels_test)
-except NameError:
-    pass
+### Random Forest
+# https://builtin.com/data-science/random-forest-algorithm
+from sklearn.ensemble import RandomForestClassifier
+clf_rf = RandomForestClassifier(n_estimators=1000)
+fit_and_score(clf_rf)
