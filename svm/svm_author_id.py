@@ -21,19 +21,40 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 
 #########################################################
-### your code goes here ###
+from sklearn import svm
+
+clf = svm.SVC(kernel='rbf', C= 10000)
+
+#print("Fitting the model...")
+#t0 = time()
+#clf.fit(features_train, labels_train)
+#print("Training Time:", round(time()-t0, 3), "s")
+
+
+#print(clf.score(features_test, labels_test))
 
 
 #########################################################
 
 #########################################################
 '''
-You'll be Provided similar code in the Quiz
-But the Code provided in Quiz has an Indexing issue
-The Code Below solves that issue, So use this one
+Use the below training set for faster fit, but lower accuracy (by ~10%).
 '''
 
-# features_train = features_train[:int(len(features_train)/100)]
-# labels_train = labels_train[:int(len(labels_train)/100)]
+#features_train = features_train[:int(len(features_train)/100)]
+#labels_train = labels_train[:int(len(labels_train)/100)]
 
+print("Fitting the model...")
+t0 = time()
+clf.fit(features_train, labels_train)
+print("Training Time:", round(time()-t0, 3), "s")
+
+print("Predicting...")
+t0 = time()
+predictions = clf.predict(features_test)        
+print("Prediction Time:", round(time()-t0, 3), "s\n")
+
+print("{} of the test emails belong to Chris".format(predictions.sum()))
+
+print("\naccuracy is: {}".format(clf.score(features_test, labels_test)))
 #########################################################
