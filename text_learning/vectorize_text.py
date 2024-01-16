@@ -85,3 +85,6 @@ vectorizer.fit_transform(word_data)
 
 # How many features?
 print("\n####\nNumber of features:", len(vectorizer.get_feature_names_out()))
+
+
+print("\nProblem Feature:", vectorizer.get_feature_names_out()[25010])
