@@ -53,7 +53,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
 
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
-            for word in ["sara", "shackleton", "chris", "germani"]:
+            for word in ["sara", "shackleton", "chris", "germani", "sshacklensf", "cgermannsf"]:
                 parsed_text = parsed_text.replace(word, "")
 
             #parsed_text = parsed_text.replace("\n", " ")
@@ -83,8 +83,5 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 vectorizer = TfidfVectorizer(stop_words='english')
 vectorizer.fit_transform(word_data)
 
-# How many features?
+### How many features?
 print("\n####\nNumber of features:", len(vectorizer.get_feature_names_out()))
-
-
-print("\nProblem Feature:", vectorizer.get_feature_names_out()[25010])
