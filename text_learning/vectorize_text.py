@@ -43,27 +43,33 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
         temp_counter += 1
-        if temp_counter < 200:
-	        path = os.path.join('..', path[:-1])
-	        print(path)
-	        email = open(path, "r")
+        if temp_counter:
+            path = os.path.join('../', path[:-1])
+            print(path)
+            email = open(path, "r")
 
-	        ### use parseOutText to extract the text from the opened email
+            ### use parseOutText to extract the text from the opened email
+            parsed_text = parseOutText(email)
 
+            ### use str.replace() to remove any instances of the words
+            ### ["sara", "shackleton", "chris", "germani"]
+            for word in ["sara", "shackleton", "chris", "germani"]:
+                parsed_text = parsed_text.replace(word, "")
 
-	        ### use str.replace() to remove any instances of the words
-	        ### ["sara", "shackleton", "chris", "germani"]
+            #parsed_text = parsed_text.replace("\n", " ")
+            #parsed_text = parsed_text.replace("   ", " ")
+            parsed_text = parsed_text.replace("  ", " ")
 
+            ### append the text to word_data
+            word_data.append(parsed_text)
 
-	        ### append the text to word_data
+            ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+            name_is = {"sara":0, "chris":1}
+            from_data.append(name_is[name])
 
+            email.close()
 
-	        ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
-
-	        email.close()
-
-print("Emails Processed")
+print("\nEmails Processed")
 from_sara.close()
 from_chris.close()
 
@@ -72,3 +78,10 @@ joblib.dump( from_data, open("your_email_authors.pkl", "wb") )
 
 
 ### in Part 4, do TfIdf vectorization here
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+vectorizer = TfidfVectorizer(stop_words='english')
+vectorizer.fit_transform(word_data)
+
+# How many features?
+print("\n####\nNumber of features:", len(vectorizer.get_feature_names_out()))
